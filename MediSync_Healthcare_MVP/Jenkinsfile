@@ -1,0 +1,10 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Python syntax check') { steps { sh 'python3 -m compileall -q backend/app' } }
+    stage('Build backend image') { steps { sh 'docker build -t medisync-backend:${BUILD_NUMBER} ./backend' } }
+    stage('Pipeline note') { steps { echo 'Configure a real Trivy/dependency scan and deployment credentials before using this pipeline.' } }
+  }
+  post { always { echo 'Review build output before deployment.' } }
+}

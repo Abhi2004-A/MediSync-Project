@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-local-demo-change-this-secret}
+      DATABASE_URL: sqlite:////data/medisync.db
+    volumes:
+      - medisync_data:/data
+    restart: unless-stopped
+volumes:
+  medisync_data:
